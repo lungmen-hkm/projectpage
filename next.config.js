@@ -3,11 +3,11 @@ module.exports = {
     return [
       {
         source: '/roboci',
-        destination: 'https://roboci-app.vercel.app/roboci',
+        destination: 'https://esp32-gas-leak-sensor.vercel.app/roboci',
       },
       {
         source: '/roboci/:path*',
-        destination: 'https://roboci-app.vercel.app/roboci/:path*',
+        destination: 'https://esp32-gas-leak-sensor.vercel.app/roboci/:path*',
       },
     ]
   },
