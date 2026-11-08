@@ -1,4 +1,6 @@
 module.exports = {
+  // Allow LAN access to dev-only resources (HMR overlay) during `next dev`.
+  allowedDevOrigins: ['192.168.1.100'],
   async rewrites() {
     return [
       {

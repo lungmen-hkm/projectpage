@@ -1,26 +1,175 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e5e5e5;
+  --foreground: #000000;
+  --accent: #4d9bff;
+  --fab-outline: #000000;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0b0b0b;
+  --foreground: #f5f5f5;
+  --fab-outline: #ffffff;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: #000;
+}
+
+/* ---------------------------------------------------------------------------
+   Bento action buttons
+   Left-to-right accent sweep on hover / keyboard focus.
+   --------------------------------------------------------------------------- */
+.action-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.action-button .action-sweep {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.action-button .action-label {
+  position: relative;
+  z-index: 1;
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+  color: #000;
+}
+
+.action-button:hover .action-sweep,
+.action-button:focus-visible .action-sweep {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------------------
+   Floating chat button
+   Perfect square, sharp corners, solid black, white layered-square icon.
+   Focus: thin outline entirely outside the button, offset by a gap.
+   The core colour and icon never invert — a short accent sweep travels
+   left-to-right and fades away, then only the outer outline remains.
+   --------------------------------------------------------------------------- */
+.fab-button {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 60;
+  display: flex;
+  height: 3.5rem;
+  width: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  color: #fff;
+}
+
+.fab-button .fab-sweep {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.fab-button .fab-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* On the dark page the black core needs a hairline edge to read as a button,
+   and the focus ring flips to white so it stays visible. */
+.dark .fab-button {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.fab-button:focus {
+  outline: 2px solid var(--fab-outline);
+  outline-offset: 4px;
+}
+
+.fab-button:focus .fab-sweep {
+  animation: fab-sweep 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fab-sweep {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  40% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .action-button .action-sweep {
+    transition: none;
+  }
+
+  .fab-button:focus .fab-sweep {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .fab-button {
+    right: 1rem;
+    bottom: 1rem;
+  }
 }
