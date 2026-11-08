@@ -381,7 +381,7 @@ export default async function ProjectsPage() {
                 <LogoMark className="h-6 w-6 text-black" />
               </span>
               <span className="hidden text-[21px] font-bold tracking-[-0.03em] text-white min-[360px]:inline">
-                lungmen<span className="text-accent">.</span>
+                lungmen<span className="text-accent">.hkm</span>
               </span>
             </a>
 
