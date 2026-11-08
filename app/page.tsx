@@ -405,14 +405,6 @@ export default async function ProjectsPage() {
               >
                 Previx Project
               </a>
-              <a
-                href={ROBOCI_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-[12px] tracking-[-0.01em] text-white/80 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                Roboci
-              </a>
             </nav>
           </div>
 
